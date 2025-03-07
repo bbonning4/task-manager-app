@@ -14,6 +14,7 @@ const App: React.FC = () => {
   const [taskName, setTaskName] = useState<string>(""); // Name of the task being added
   const [tasks, setTasks] = useState<Task[]>([]); // Array of tasks
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null); // Track the task being edited
+  const [selected, setSelected] = useState<string>("all");
 
   // Load tasks from localStorage on initial load
   useEffect(() => {
@@ -77,6 +78,19 @@ const App: React.FC = () => {
     }
   };
 
+  // Update the button click handler
+  const handleButtonClick = (button: string) => {
+    setSelected(button);
+  };
+
+  // Function to generate button styles based on selection
+  const getButtonStyles = (button: string) => ({
+    backgroundColor: selected === button ? "rgb(59 130 246)" : "transparent",
+    color: selected === button ? "white" : "inherit",
+    borderColor: selected === button ? "rgb(59 130 246)" : "inherit",
+    fontWeight: selected === button ? "bold" : "normal", // Bold the font if selected
+  });
+
   return (
     <Router>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -105,7 +119,6 @@ const App: React.FC = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ marginTop: 2 }}
               data-testid="add-task-button"
             >
               {editingTaskId ? "Save Edit" : "Add Task"}
@@ -115,17 +128,32 @@ const App: React.FC = () => {
           {/* Navigation Links */}
           <div className="flex justify-center gap-4 mt-4">
             <Link to="/" className="no-underline">
-              <Button variant="outlined" data-testid="all-tasks-link">
+              <Button
+                variant="outlined"
+                data-testid="all-tasks-link"
+                onClick={() => handleButtonClick("all")}
+                sx={getButtonStyles("all")}
+              >
                 All Tasks
               </Button>
             </Link>
             <Link to="/active" className="no-underline">
-              <Button variant="outlined" data-testid="active-tasks-link">
+              <Button
+                variant="outlined"
+                data-testid="active-tasks-link"
+                onClick={() => handleButtonClick("active")}
+                sx={getButtonStyles("active")}
+              >
                 Active Tasks
               </Button>
             </Link>
             <Link to="/completed" className="no-underline">
-              <Button variant="outlined" data-testid="completed-tasks-link">
+              <Button
+                variant="outlined"
+                data-testid="completed-tasks-link"
+                onClick={() => handleButtonClick("completed")}
+                sx={getButtonStyles("completed")}
+              >
                 Completed Tasks
               </Button>
             </Link>
