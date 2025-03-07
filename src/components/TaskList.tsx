@@ -24,6 +24,8 @@ const TaskList: React.FC<TaskListProps> = ({
   }) => (
     <List sx={{ marginTop: 2 }}>
       {tasks.map((task) => (
+        <>
+        <hr></hr>
         <ListItem key={task.id} sx={{ display: 'flex', alignItems: 'center' }}>
           <Checkbox
             checked={task.completed}
@@ -42,6 +44,7 @@ const TaskList: React.FC<TaskListProps> = ({
             Remove
           </Button>
         </ListItem>
+        </>
       ))}
     </List>
   );

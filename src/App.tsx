@@ -84,27 +84,33 @@ const App: React.FC = () => {
           <h1 className="text-2xl font-bold text-center mb-4">Task Manager</h1>
 
           {/* Task input field and button */}
-          <div className="space-y-4">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              editingTaskId ? handleSaveEdit() : handleAddTask();
+            }}
+          >
             <TextField
               label={editingTaskId ? "Edit Task" : "New Task"}
               variant="outlined"
               fullWidth
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
-              data-testid="task-input"
               sx={{ marginBottom: 2 }}
+              data-testid="task-input"
             />
 
             <Button
+              type="submit"
               variant="contained"
               color="primary"
-              onClick={editingTaskId ? handleSaveEdit : handleAddTask}
               fullWidth
+              sx={{ marginTop: 2 }}
               data-testid="add-task-button"
             >
               {editingTaskId ? "Save Edit" : "Add Task"}
             </Button>
-          </div>
+          </form>
 
           {/* Navigation Links */}
           <div className="flex justify-center gap-4 mt-4">
